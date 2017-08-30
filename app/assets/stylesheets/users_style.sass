@@ -1,0 +1,35 @@
+/* Mixin for Centering User Panel */
+@mixin center_panel_user($position: relative)
+  position: $position
+  top: 50%
+  width: 30%
+  margin: 0 auto
+  -webkit-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  transform: translateY(-50%)
+
+html, body
+  height: 100%
+  width: 100%
+
+#wrapper
+  height: 100%
+  width: 100%
+  overflow: hidden
+  background: image_url("bg_user_auth"), rgba(80, 56, 103, 0.8)
+  background-blend-mode: overlay
+  background-size: cover
+  background-repeat: no-repeat
+  margin: 0
+
+.panel_container
+  @include center_panel_user()
+
+  #panel_user
+    background-color: #3e1666
+    color: #fff
+    border: none
+
+    #title_panel
+      background-color: #3e1666
+      color: #fff
