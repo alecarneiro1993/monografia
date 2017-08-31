@@ -8,13 +8,24 @@ $auth-links-color-hv: #8956eb
 $auth-btn-color: #9344ab
 $auth-btn-color-hv: #2c9e65
 
+body
+  background: image_url("bg_user_auth"), $bg-color-op !important
+  background-blend-mode: overlay !important
+  background-size: cover !important
+  background-repeat: no-repeat !important
+
+#wrapper:before
+  display: inline-block
+  vertical-align: middle
+
+#wrapper:before
+    content: ""
+    height: 100%
+
+
 #wrapper
   min-height: 100%
   width: 100%
-  background: image_url("bg_user_auth"), $bg-color-op
-  background-blend-mode: overlay
-  background-size: cover
-  background-repeat: no-repeat
   margin: 0
 
   #auth_logo
