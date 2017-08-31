@@ -9,9 +9,8 @@ $auth-btn-color: #9344ab
 $auth-btn-color-hv: #2c9e65
 
 #wrapper
-  height: 100%
+  min-height: 100%
   width: 100%
-  overflow: hidden
   background: image_url("bg_user_auth"), $bg-color-op
   background-blend-mode: overlay
   background-size: cover
@@ -38,6 +37,17 @@ $auth-btn-color-hv: #2c9e65
       #auth-btn
         width: 100%
         margin-top: 5px
+        background-color: $auth-btn-color
+        border: none
+        transition: background-color 0.2s
+        font-weight: bold
+
+        &:hover
+          background-color: $auth-btn-color-hv
+
+      #auth-btn-reg
+        width: 100%
+        margin-top: 10px
         background-color: $auth-btn-color
         border: none
         transition: background-color 0.2s
