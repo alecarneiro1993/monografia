@@ -25,6 +25,14 @@
           <%= f.label :last_name %>
           <%= f.text_field :last_name, class: 'form-control' %>
         </div>
+        <div class="form-group">
+          <%= f.label :role_id %>
+          <div id="role_container">
+            <div class="role_button">Aluno</div>
+            <div class="role_button">Professor</div>
+            <%= f.text_field :role_id, class: 'hidden_role form-control' %>
+          </div>
+        </div>
         <%= render 'devise/shared/links' %>
         <%= f.submit t('.sign_up', default: 'Sign up'), id: 'auth-btn-reg', class: 'btn btn-primary' %>
         <% end %>

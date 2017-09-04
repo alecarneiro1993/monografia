@@ -11,6 +11,7 @@
   <body>
     <div id="wrapper" class="container">
       <%= yield %>
+      <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
     </div>
   </body>
 </html>

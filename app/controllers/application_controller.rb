@@ -7,9 +7,11 @@ class ApplicationController < ActionController::Base
 
   def layout_by_resource
     if devise_controller?
+      puts "estou aqui"
       "devise"
     else
       "application"
+      puts "deu merda"
     end
   end
 end
