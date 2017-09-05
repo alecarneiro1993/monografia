@@ -7,6 +7,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates_presence_of :first_name, :on => :create, :message => "can't be blank"
+  validates_presence_of :last_name, :on => :create, :message => "can't be blank"
+
   private
   def set_default_role
     self.role_id ||= Role.find_by_id(Integer(params[:role_id]))
