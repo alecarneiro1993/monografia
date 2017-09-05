@@ -1,9 +1,6 @@
 /* global $ */
-$( document ).ready(function() {
-    
-    
-    
-//Select Role on Click - Register Page
+$(document).on('turbolinks:load', function() {
+  //Select Role on Click - Register Page
     $( ".role_button" ).click(function() {
         $(".role_button").removeAttr("id");
         $(this).attr('id', 'role_selected');
@@ -16,3 +13,4 @@ $( document ).ready(function() {
     
     
 });
+    
