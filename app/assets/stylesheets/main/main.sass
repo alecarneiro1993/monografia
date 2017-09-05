@@ -1,0 +1,26 @@
+@import "all/styles.sass"
+
+$selected_nav_item: #45267F
+
+#main_navbar
+  
+  background-color: $purple-nav-bar
+  border: 0
+  border-radius: 0
+
+  #main_container
+  
+    a#main_nav_logo
+      font-size: 3em
+      font-family: 'Mochary'
+      color: #fff
+    
+    ul
+      li
+        a
+          color: #fff
+          font-weight: bold
+      
+      li.active
+          a
+            background-color: $selected_nav_item

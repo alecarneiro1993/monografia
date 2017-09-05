@@ -37,6 +37,8 @@ gem 'devise-bootstrap-views'
 
 gem 'bootstrap-sass'
 
+gem 'autoprefixer-rails'
+
 gem 'jquery-rails', '~> 4.3', '>= 4.3.1'
 
 # Use Redis adapter to run Action Cable in production

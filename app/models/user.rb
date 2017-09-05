@@ -1,6 +1,8 @@
 class User < ApplicationRecord
 
   belongs_to :role
+  has_many :questions, -> { where(role: "professor") }, class_name: 'User'
+  
   before_create :set_default_role
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
