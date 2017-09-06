@@ -1,0 +1,99 @@
+@import "all/styles.sass"
+
+body
+  background: image_url("bg_user_auth"), $bg-color-op !important
+  background-blend-mode: overlay !important
+  background-size: cover !important
+  background-repeat: no-repeat !important
+
+#wrapper:before
+  display: inline-block
+  vertical-align: middle
+
+#wrapper:before
+    content: ""
+    height: 100%
+
+#wrapper
+  min-height: 100%
+  width: 100%
+  margin: 0
+
+  #auth_logo
+    color: #fff
+    text-align: center
+
+    h1
+      font-size: 9em
+      font-family: "Mochary"
+
+
+  .row-mt
+    margin-top: 2%
+
+    #panel_user
+      background-color: $auth-panel-bg
+      color: #000
+      border: none
+      
+      #role_container
+        text-align: center
+      
+        .role_button
+          display: inline-block
+          border: none
+          padding: 15px
+          text-align: center
+          color: #000
+          background-color: $role-btn-color
+          font-weight: bold
+          margin-left: 5px
+          font-size: 1.2em
+          width: 40%
+          border-radius: 5px
+          
+          &:hover
+            background-color: $role-btn-selected-hv
+            color: #fff
+        
+        #role_selected
+          background-color: $role-btn-selected-hv
+          color: #fff
+          
+        .hidden_role
+          display: none
+
+      #auth-btn
+        width: 100%
+        margin-top: 5px
+        background-color: $auth-btn-color
+        border: none
+        transition: background-color 0.2s
+        font-weight: bold
+
+        &:hover
+          background-color: $auth-btn-color-hv
+
+      #auth-btn-reg
+        width: 100%
+        margin-top: 10px
+        background-color: $auth-btn-color
+        border: none
+        transition: background-color 0.2s
+        font-weight: bold
+
+        &:hover
+          background-color: $auth-btn-color-hv
+
+
+      #auth_links
+        float: right
+        width: auto
+
+        a
+          color: $auth_links-color
+          text-decoration: none
+          font-weight: bold
+
+          &:hover
+            color: $auth-links-color-hv
