@@ -25,16 +25,16 @@
           <% end %>
         </table>
       </div>
+      <%= render "shared/createResource" %>
     <% else %>
-      <div id="no_question">
-          <%= @noQuestions %>
-      </div>
+      <%= render "shared/noQuestion" %>
     <% end %>
   <% else %>
     <div id="no_question">
       <%= @noQuestions %>
     </div>
   <% end %>
-  </div>
+</div>
+
 
 

@@ -1,16 +1,19 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :set_current_user
+  before_action :check_professor, only: [:new, :edit, :update, :destroy]
   # GET /questions
   # GET /questions.json
   def index
+    @resource = "Question"
+    @resource_new_path = new_question_path
     if @user.role.name == "professor"
       @questions = @user.questions
       if @questions.count == 0
-        @noQuestions = "You have no created questions."
+        @noQuestions = "Ahh boo ;(! <br /> You have no questions created.".html_safe
       end
     else
-      @noQuestions = "You have no questions available to try."
+      @noQuestions = "Ahh boo ;(! <br /> You have no questions to try.".html_safe
     end
   end
 
@@ -84,5 +87,11 @@ class QuestionsController < ApplicationController
   #Set Current user on platform
   def set_current_user
     @user = current_user
+  end
+  
+  def check_professor
+    if @user.role.name != "professor"
+      redirect_to root_path
+    end
   end
 end
