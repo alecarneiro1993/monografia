@@ -4,7 +4,14 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = @user.questions
+    if @user.role.name == "professor"
+      @questions = @user.questions
+      if @questions.count == 0
+        @noQuestions = "You have no created questions."
+      end
+    else
+      @noQuestions = "You have no questions available to try."
+    end
   end
 
   # GET /questions/1

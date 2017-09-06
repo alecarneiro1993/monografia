@@ -1,24 +1,40 @@
-<p id="notice"><%= notice %></p>
 <div class="row">
-  <div id="index_table_container" class="panel panel-default col-md-6 col-md-offset-3">
-    <!-- Default panel contents -->
-    <div id="index_table_header" class="panel-heading">Your Questions</div>
-    <!-- Table -->
-    <table class="table">
-      <tr>
-        <th class="cell_width text_center">Title</th>
-        <th class="cell_width text_center">Description</th>
-        <th class="cell_width text_center">Actions</th>
-      </tr>
-      <% @questions.each do |question| %>
-      <tr>
-        <td><%= question.title %></td>
-        <td><%= truncate(question.description, :length => 50, :separator => ' ')%></td>
-      </tr>
-      <% end %>
-    </table>
+  <% if @user.role.name == "professor" %>
+    <% if @questions.count != 0 %>
+      <div id="index_table_container" class="panel panel-default col-md-8 col-md-offset-2">
+        <!-- Default panel contents -->
+        <div id="index_table_header" class="panel-heading">Your Questions</div>
+        <!-- Table -->
+        <table class="table">
+          <tr>
+            <th class="cell_width text_center">Title</th>
+            <th class="cell_width text_center">Description</th>
+            <th class="cell_width text_center">Actions</th>
+          </tr>
+          <% @questions.each do |question| %>
+          <tr>
+            <td><%= truncate(question.title, :length => 20, :separator => ' ')%></td>
+            <td><%= truncate(question.description, :length => 70, :separator => ' ')%></td>
+            <td class="text_center">
+              <%= link_to 'Show', question_path(question), :class => "td_show" %>
+              <%= link_to 'Edit', edit_question_path(question), :class => "td_edit" %>
+              <%= link_to 'Delete', question_path(question),
+                        method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      </div>
+    <% else %>
+      <div id="no_question">
+          <%= @noQuestions %>
+      </div>
+    <% end %>
+  <% else %>
+    <div id="no_question">
+      <%= @noQuestions %>
+    </div>
+  <% end %>
   </div>
-</div>
-<br>
 
-<%= link_to 'New Question', new_question_path %>
+

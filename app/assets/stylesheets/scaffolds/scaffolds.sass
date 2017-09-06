@@ -1,0 +1,49 @@
+@import "all/styles.sass"
+@import "all/variables.sass"
+
+
+#no_question
+  text-align: center
+  font-size: 3em
+  color: #000
+  font-weight: bold
+  margin: 0 auto
+
+#index_table_container
+  padding: 0
+
+  #index_table_header
+    font-size: 2em
+    text-align: center
+    font-weight: bold
+    background-color: $index-table-header-color
+    color: #fff
+
+  .table
+  
+    td
+      
+      text-align: center
+      border-left: 1px solid $border-td-color
+      border-right: 1px solid $border-td-color
+      vertical-align: middle
+  
+      a
+        color: #fff
+        border-radius: 4px
+        padding: 5px
+        font-weight: bold
+        display: inline-block
+        text-decoration: none
+        
+      .td_show
+        background-color: $td-show-option
+      .td_edit
+        background-color: $td-edit-option
+      .td_delete
+        background-color: $td-delete-option
+        
+      &:hover
+        text-decoration: none
+          
+          

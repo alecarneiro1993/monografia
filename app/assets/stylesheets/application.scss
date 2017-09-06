@@ -12,7 +12,9 @@
  *
  *= require_directory ./all
  *= require_directory ./main
+ *= require_directory ./scaffolds
  *= require_directory ./questions
  *= require_self
  */
+ @import "bootstrap-sprockets";
 @import "bootstrap";
