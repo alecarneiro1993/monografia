@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
     @resource = "Question"
     @resource_new_path = new_question_path
     if @user.role.name == "professor"
-      @questions = @user.questions
+      @questions = @user.questions.paginate(page: params[:page], per_page: 6)
       if @questions.count == 0
         @noQuestions = "Ahh boo ;(! <br /> You have no questions created.".html_safe
       end

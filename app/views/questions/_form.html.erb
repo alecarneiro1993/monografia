@@ -1,3 +1,13 @@
+
+<div id="form_container" class="panel panel-default col-md-8 col-md-offset-2">
+  <div id="form_title_container" class="panel-heading">
+    <h3 class="panel-title form_title">Create Question</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div>
+
 <%= form_with(model: question, local: true) do |form| %>
   <% if question.errors.any? %>
     <div id="error_explanation">

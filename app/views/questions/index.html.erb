@@ -25,9 +25,14 @@
           <% end %>
         </table>
       </div>
-      <%= render "shared/createResource" %>
+</div>
+    <div class="row">
+      <%= will_paginate @questions, :class => "col-md-2 col-md-offset-5" %>
+    </div>
+    <%= render "shared/createResource" %>
     <% else %>
-      <%= render "shared/noQuestion" %>
+</div>
+<%= render "shared/noQuestion" %>
     <% end %>
   <% else %>
     <div id="no_question">
