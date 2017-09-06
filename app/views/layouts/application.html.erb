@@ -3,7 +3,6 @@
   <head>
     <title>Monografia</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -22,22 +21,20 @@
               </button>
               <a id="main_nav_logo" class="navbar-brand" href="#">Slife</a>
             </div>
-        
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li class="active"><%= link_to "Questions", questions_path %> <span class="sr-only">(current)</span></li>
-                <li><%= link_to "Lists", questions_path %></li>
+              <ul id="main_nav_menu" class="nav navbar-nav">
+                <li class="<%= 'active' if current_page?(questions_path) %>"><%= link_to "Questions", questions_path %> <span class="sr-only">(current)</span></li>
+                <li class="<%= 'active' if current_page?(lists_path) %>"><%= link_to "Lists", lists_path %></li>
               </ul>
-              <ul class="nav navbar-nav navbar-right">
+              <ul id="main_nav_user_menu" class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= @user.first_name %><span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
+                    <li><%= link_to('Edit profile', edit_user_registration_path) %></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <li><%= link_to('Logout', destroy_user_session_path, method: :delete) %></li>
                   </ul>
                 </li>
               </ul>
@@ -47,7 +44,7 @@
       </header>
     <div id="wrapper" class="container">
       <%= yield %>
-      <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
+
     </div>
   </body>
 </html>

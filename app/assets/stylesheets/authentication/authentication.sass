@@ -1,4 +1,5 @@
 @import "all/styles.sass"
+@import "all/variables.sass"
 
 body
   background: image_url("bg_user_auth"), $bg-color-op !important
@@ -35,10 +36,10 @@ body
       background-color: $auth-panel-bg
       color: #000
       border: none
-      
+
       #role_container
         text-align: center
-      
+
         .role_button
           display: inline-block
           border: none
@@ -51,15 +52,15 @@ body
           font-size: 1.2em
           width: 40%
           border-radius: 5px
-          
+
           &:hover
             background-color: $role-btn-selected-hv
             color: #fff
-        
+
         #role_selected
           background-color: $role-btn-selected-hv
           color: #fff
-          
+
         .hidden_role
           display: none
 

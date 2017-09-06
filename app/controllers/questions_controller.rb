@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = @user.questions
   end
 
   # GET /questions/1
@@ -71,8 +71,8 @@ class QuestionsController < ApplicationController
     def question_params
       params.fetch(:question, {})
     end
-    
-    
+
+
   private
   #Set Current user on platform
   def set_current_user

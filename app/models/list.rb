@@ -1,4 +1,4 @@
 class List < ApplicationRecord
-  belongs_to :users
-  has_many :questions
+  has_one :user, -> { where(role: "professor") }, class_name: 'User'
+  has_and_belongs_to_many :questions
 end

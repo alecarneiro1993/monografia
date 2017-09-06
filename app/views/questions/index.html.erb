@@ -1,25 +1,24 @@
 <p id="notice"><%= notice %></p>
-
-<h1>Questions</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @questions.each do |question| %>
+<div class="row">
+  <div id="index_table_container" class="panel panel-default col-md-6 col-md-offset-3">
+    <!-- Default panel contents -->
+    <div id="index_table_header" class="panel-heading">Your Questions</div>
+    <!-- Table -->
+    <table class="table">
       <tr>
-        <td><%= link_to 'Show', question %></td>
-        <td><%= link_to 'Edit', edit_question_path(question) %></td>
-        <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th class="cell_width text_center">Title</th>
+        <th class="cell_width text_center">Description</th>
+        <th class="cell_width text_center">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-
+      <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.title %></td>
+        <td><%= truncate(question.description, :length => 50, :separator => ' ')%></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
 <br>
 
 <%= link_to 'New Question', new_question_path %>
