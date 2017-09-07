@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy]
   before_action :set_current_user
   before_action :check_professor, only: [:new, :edit, :update, :destroy]
+
   # GET /questions
   # GET /questions.json
   def index
@@ -35,6 +36,7 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
+    @question.user_id = @user.id
 
     respond_to do |format|
       if @question.save
@@ -79,7 +81,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.fetch(:question, {})
+      params.require(:question).permit(:title, :description, :images, {images: []}, {answer: []})
     end
 
 
@@ -88,7 +90,7 @@ class QuestionsController < ApplicationController
   def set_current_user
     @user = current_user
   end
-  
+
   def check_professor
     if @user.role.name != "professor"
       redirect_to root_path

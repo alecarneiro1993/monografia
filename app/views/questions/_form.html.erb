@@ -1,27 +1,46 @@
 
-<div id="form_container" class="panel panel-default col-md-8 col-md-offset-2">
+<div id="form_container" class="panel panel-default col-md-4 col-md-offset-4">
   <div id="form_title_container" class="panel-heading">
-    <h3 class="panel-title form_title">Create Question</h3>
+    <h3 class="panel-title form_title">
+      <% if current_page?(new_question_path) %>
+        Create
+      <% else %>
+        Edit
+      <% end %>
+      Question
+    </h3>
   </div>
   <div class="panel-body">
-    Panel content
-  </div>
-</div>
-
-<%= form_with(model: question, local: true) do |form| %>
-  <% if question.errors.any? %>
+    <%= form_for(@question) do |f| %>
+  <% if @question.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
+      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this post from being saved:</h2>
       <ul>
-      <% question.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+      <% @question.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= f.label :title %><br />
+    <%= f.text_field :title, :class => "form-control"%>
+  </div>
+  <div class="form-group">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :class => "form-control resize_disable" %>
+  </div>
+  <div class="form-group">
+    <%= f.label :images %><br />
+    <%= f.file_field :images, multiple: true %>
+  </div>
+  <div class="field">
+    <%= f.submit "Submit", :class => "create_resource_new" %>
   </div>
 <% end %>
+<div class="field">
+  <%= link_to 'Cancel', questions_path, :class => "back_link cancel_resource_new" %>
+</div>
+  </div>
+</div>

@@ -13,7 +13,7 @@
           </tr>
           <% @questions.each do |question| %>
           <tr>
-            <td><%= truncate(question.title, :length => 20, :separator => ' ')%></td>
+            <td class="no-border"><%= truncate(question.title, :length => 20, :separator => ' ')%></td>
             <td><%= truncate(question.description, :length => 70, :separator => ' ')%></td>
             <td class="text_center">
               <%= link_to 'Show', question_path(question), :class => "td_show" %>
@@ -40,6 +40,3 @@
     </div>
   <% end %>
 </div>
-
-
-

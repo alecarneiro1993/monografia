@@ -1,5 +1,10 @@
 class Question < ApplicationRecord
   belongs_to :user, class_name: "User"
-  has_and_belongs_to_many :lists
-  mount_uploaders :question_images, QuestionImagesUploader
+  belongs_to :list
+  mount_uploaders :images, QuestionImagesUploader
+
+  validates_presence_of :title, :on => :create, :message => "can't be blank"
+  validates_presence_of :description, :on => :create, :message => "can't be blank"
+  validates_presence_of :images, :on => :create, :message => "needs at least 2 images"
+
 end
