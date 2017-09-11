@@ -1,6 +1,5 @@
 class Question < ApplicationRecord
   belongs_to :user, class_name: "User"
-  belongs_to :list
   mount_uploaders :images, QuestionImagesUploader
 
   validates_presence_of :title, :on => :create, :message => "can't be blank"

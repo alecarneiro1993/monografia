@@ -9,6 +9,3 @@
 ['aluno', 'professor', 'admin'].each do |role|
   Role.find_or_create_by({name: role})
 end
-
-@user = User.find(1)
-@user.questions.new(title: "Title 1", description: "This is a description to check if truncates works or not, if it doesnt, you will see this full text").save!

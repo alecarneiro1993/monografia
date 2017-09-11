@@ -1,0 +1,21 @@
+<div class="row col-md-10 col-md-offset-1">
+  <h1 class='center'>
+    <% if current_page?(set_answer_question_path) %>
+        Set Answer
+      <% else %>
+        Try Question
+      <% end %>
+    </h1>
+  <ul id="list_images" class="list_style list-unstyled connectedSortable">
+    <% @question.images.each_with_index do |i, id| %>
+    <li id="<%= id %>">
+      <img src="<%= i.url %>">
+    </li>
+    <% end %>
+  </ul>
+  <ul id="list_answer" class="list_style list-unstyled connectedSortable">
+  </ul>
+</div>
+<div class="row col-md-2 col-md-offset-5 center row-mt">
+  <a class="answer_btn">Update Answer</a>
+</div>

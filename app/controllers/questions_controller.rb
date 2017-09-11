@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :set_answer]
   before_action :set_current_user
   before_action :check_professor, only: [:new, :edit, :update, :destroy]
 
@@ -37,15 +37,11 @@ class QuestionsController < ApplicationController
   def create
     @question = Question.new(question_params)
     @question.user_id = @user.id
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.save
+      redirect_to set_answer_question_path(@question)
+    else
+      redirect_to new_question_path
+      format.json { render json: @question.errors, status: :unprocessable_entity }
     end
   end
 
@@ -62,6 +58,10 @@ class QuestionsController < ApplicationController
       end
     end
   end
+  
+  def set_answer
+  end
+  
 
   # DELETE /questions/1
   # DELETE /questions/1.json

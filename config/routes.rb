@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   resources :lists
+  
+  get '/questions/:id/set_answer' => 'questions#set_answer', as: 'set_answer_question'
   resources :questions
+  
 
   devise_for :users, :controllers => {:registrations => "registrations"}
 
