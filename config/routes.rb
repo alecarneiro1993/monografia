@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :lists
   
   get '/questions/:id/set_answer' => 'questions#set_answer', as: 'set_answer_question'
+  patch "questions/:id/set_answer", to: "questions#send_answer"
   resources :questions
   
 
@@ -10,7 +11,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     post 'users/sign_up', to: 'devise/registrations#create'
-end
+  end
 
   authenticate :user do
    root to: 'questions#index'

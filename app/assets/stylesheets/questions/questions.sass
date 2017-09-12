@@ -6,6 +6,23 @@
 
 .center
   text-align: center
+  
+.custom_counter 
+  margin-left: 0
+  padding: 0
+  list-style-type: none
+
+.custom_counter li 
+  counter-increment: li-counter
+  
+.custom_counter li::before 
+    content: counter(li-counter)
+    font-weight: bold
+    background-color: $li-counter-color
+    border-radius: 2px
+    margin-right: 10px
+    padding: 3px
+    color: #fff
 
 .list_style
   margin-top: 20px
@@ -24,7 +41,7 @@
     margin-bottom: 10px
     border: 2px solid $li-border-color
     img
-      width: inherit
+      width: 90%
       height: 100%
 
 #list_images
@@ -34,8 +51,10 @@
   border-color: $list-answer-bg-color
   float: right
   
-.answer_btn
+.answer_btn, .answer_question_btn
   background-color: $submit-btn-color
+  font-weight: bold
+  border-radius: 4px
   text-decoration: none
   padding: 10px
   color: #fff
@@ -44,4 +63,21 @@
     text-decoration: none
     color: #fff
     cursor: pointer
+
+#feedback
+  color: #fff
+  padding: 5px
+  border-radius: 4px
   
+.feedback_wrong
+  background-color: $feedback-wrong-color
+    
+.feedback_right
+  background-color: $feedback-right-color
+
+#errors
+  background-color: $errors-hint-color
+  font-weight: bold
+  font-size: 1.3em
+  color: #fff
+  text-align: left

@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy, :set_answer]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :set_answer, :send_answer]
   before_action :set_current_user
   before_action :check_professor, only: [:new, :edit, :update, :destroy]
 
@@ -48,24 +48,26 @@ class QuestionsController < ApplicationController
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+        redirect_to set_answer_question_path(@question)
       end
-    end
   end
   
   def set_answer
   end
   
+  def send_answer
+    if @question.update_attribute(:answer, params[:question][:answer].split(',').map { |s| s.to_i })
+      redirect_to questions_path, notice: 'Question was created and answer was set.'
+    else
+      redirect_to set_answer_question_path(@question)
+    end
+  end
+  
 
   # DELETE /questions/1
   # DELETE /questions/1.json
-  def destroy
+  def destroy 
     @question.destroy
     respond_to do |format|
       format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
@@ -81,7 +83,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:title, :description, :images, {images: []}, {answer: []})
+      params.require(:question).permit(:title, :description, :images, {images: []}, :answer, answer: [])
     end
 
 
