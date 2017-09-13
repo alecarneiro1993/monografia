@@ -1,45 +1,45 @@
 /* global $ */
 
 $(document).on('turbolinks:load', function() {
-  
+
   //SET_ANSWER FUNCTION
   if($(".answer_btn").length > 0) {
     $(".answer_btn").click(function() {
-      
+
       var answerArr = [];
-      
+
       $("#list_answer").children().each(function() {
         answerArr.push($(this).attr("id"));
       });
-      
+
       //Convert to Integer
       answerArr = answerArr.map(Number);
       console.log(answerArr);
-      
+
       //Set hidden input answer
       $(".answer_input").val(answerArr);
-      
+
     });
   }
-  
+
   //COMPARE ANSWERS FUNCTON
   if($(".answer_question_btn").length > 0) {
-    
+
     var errorMsgs = [];
-    
+
     $(".answer_question_btn").click(function() {
-      
+
       var answerArr = [];
       var errorMsgs = [];
-      
+
       $("#list_answer").children().each(function() {
         answerArr.push($(this).attr("id"));
       });
-      
+
       //Convert to Integer
       answerArr = answerArr.map(Number);
       console.log("My answer: " + answerArr);
-      
+
       if(arraysEqual(answerArr, question_answer, errorMsgs).length == 0) {
         $("#errors").html('');
         $("#feedback").html("You are correct! Congratulations!!");
@@ -54,18 +54,18 @@ $(document).on('turbolinks:load', function() {
           $("#errors").append("<li>" + errorMsgs[i] + "</li>");
         }
       }
-      
+
     });
   }
-  
-  
+
+
   //Compare arrays function
   function arraysEqual(arr1, arr2, errorArr) {
     if(arr1.length !== arr2.length) {
       errorArr.push("Number of instructions is incorrect.");
       return errorArr;
     }
-    
+
     for(var i = 0; i < arr1.length; i++) {
         if(arr1[i] !== arr2[i])  {
           errorArr.push("Instruction in position " + (i+1) + " is incorrect.");
@@ -73,11 +73,20 @@ $(document).on('turbolinks:load', function() {
     }
     return errorArr;
 }
-  
-  
+
+  //Shuffle list items in list_images list
+  $(function () {
+      var parent = $("#list_images");
+      var lis = parent.children();
+      while (lis.length) {
+          parent.append(lis.splice(Math.floor(Math.random() * lis.length), 1)[0]);
+      }
+  });
+
+
   //Turn Lists Sortable
-  $( function() {
-    $( "#list_images, #list_answer" ).sortable({
+  $(function() {
+    $("#list_images, #list_answer").sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
   });
