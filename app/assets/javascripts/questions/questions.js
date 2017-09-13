@@ -4,6 +4,9 @@ $(document).on('turbolinks:load', function() {
 
   //SET_ANSWER FUNCTION
   if($(".answer_btn").length > 0) {
+    
+    turnListsSortable();
+    
     $(".answer_btn").click(function() {
 
       var answerArr = [];
@@ -24,6 +27,15 @@ $(document).on('turbolinks:load', function() {
 
   //COMPARE ANSWERS FUNCTON
   if($(".answer_question_btn").length > 0) {
+    
+    //Shuffle list items in list_images list
+    $(function () {
+        var parent = $("#list_images");
+        var lis = parent.children();
+        while (lis.length) {
+            parent.append(lis.splice(Math.floor(Math.random() * lis.length), 1)[0]);
+        }
+    });
 
     var errorMsgs = [];
 
@@ -58,6 +70,7 @@ $(document).on('turbolinks:load', function() {
     });
   }
 
+  turnListsSortable();
 
   //Compare arrays function
   function arraysEqual(arr1, arr2, errorArr) {
@@ -74,20 +87,12 @@ $(document).on('turbolinks:load', function() {
     return errorArr;
 }
 
-  //Shuffle list items in list_images list
-  $(function () {
-      var parent = $("#list_images");
-      var lis = parent.children();
-      while (lis.length) {
-          parent.append(lis.splice(Math.floor(Math.random() * lis.length), 1)[0]);
-      }
-  });
-
 
   //Turn Lists Sortable
-  $(function() {
+  function turnListsSortable() {
     $("#list_images, #list_answer").sortable({
       connectWith: ".connectedSortable"
     }).disableSelection();
-  });
+  }
+  
 });
