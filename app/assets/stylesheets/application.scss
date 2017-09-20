@@ -14,6 +14,7 @@
  *= require_directory ./main
  *= require_directory ./scaffolds
  *= require_directory ./questions
+ *= require_directory ./lists
  *= require_self
  */
  @import "bootstrap-sprockets";

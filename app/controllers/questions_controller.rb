@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :edit, :update, :destroy, :set_answer, :send_answer]
   before_action :set_current_user
-  before_action :check_professor, only: [:new, :edit, :update, :destroy]
+  before_action :check_professor
 
   # GET /questions
   # GET /questions.json
@@ -11,10 +11,8 @@ class QuestionsController < ApplicationController
     if @user.role.name == "professor"
       @questions = @user.questions.paginate(page: params[:page], per_page: 6)
       if @questions.count == 0
-        @noQuestions = "Ahh boo ;(! <br /> You have no questions created.".html_safe
+        @noResource = "Ahh boo ;(! <br /> You have no questions created.".html_safe
       end
-    else
-      @noQuestions = "Ahh boo ;(! <br /> You have no questions to try.".html_safe
     end
   end
 

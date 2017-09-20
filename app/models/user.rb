@@ -2,6 +2,7 @@ class User < ApplicationRecord
 
   belongs_to :role
   has_many :questions
+  has_many :lists
 
   before_create :set_default_role
   # Include default devise modules. Others available are:

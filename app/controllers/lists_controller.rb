@@ -1,10 +1,19 @@
 class ListsController < ApplicationController
   before_action :set_list, only: [:show, :edit, :update, :destroy]
   before_action :set_current_user
+  before_action :check_professor, only: [:new, :edit, :update, :destroy]
   # GET /lists
   # GET /lists.json
   def index
+    @resource = "List"
+    @resource_new_path = new_list_path
     @lists = List.all
+    if @user.role.name == "professor"
+      @lists = @user.lists.paginate(page: params[:page], per_page: 6)
+      if @lists.count == 0
+        @noResource = "Ahh boo ;(! <br /> You have no lists created.".html_safe
+      end
+    end
   end
 
   # GET /lists/1
@@ -15,6 +24,7 @@ class ListsController < ApplicationController
   # GET /lists/new
   def new
     @list = List.new
+    @questions = @user.questions
   end
 
   # GET /lists/1/edit
@@ -76,5 +86,12 @@ class ListsController < ApplicationController
     #Set Current user on platform
     def set_current_user
       @user = current_user
+    end
+    
+    private
+    def check_professor
+      if @user.role.name != "professor"
+        redirect_to root_path
+      end
     end
 end

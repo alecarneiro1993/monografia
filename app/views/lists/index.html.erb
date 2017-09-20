@@ -1,25 +1,36 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <!-- START LIST COUNT-->
+  <% if @lists.count != 0 %>
+    <div id="index_table_container" class="panel panel-default col-md-8 col-md-offset-2">
+      <div id="index_table_header" class="panel-heading">Your lists</div>
+      <table class="table">
+        <tr>
+          <th class="cell_width text_center">Title</th>
+          <th class="cell_width text_center">Description</th>
+          <th class="cell_width text_center">Actions</th>
+        </tr>
+        <!-- START .EACH-->
+        <% @lists.each do |list| %>
+        <tr>
+          <td class="no-border"><%= truncate(list.title, :length => 20, :separator => ' ')%></td>
+          <td class="text_center">
+            <%= link_to 'Show', list_path(list), :class => "td_show" %>
+            <%= link_to 'Edit', edit_list_path(list), :class => "td_edit" %>
+            <%= link_to 'Delete', list_path(list),
+                      method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
+          </td>
+        </tr>
+        <% end %>
+        <!-- END .EACH-->
+      </table>
+    </div>
+    <div class="row">
+      <%= will_paginate @lists, :class => "col-md-2 col-md-offset-5" %>
+    </div>
+    <%= render "shared/createResource" %>
+  <% else %>
+  <%= render "shared/noResource" %>
+  <% end %>
+  <!-- END LIST COUNT -->
+</div>
 
-<h1>Lists</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @lists.each do |list| %>
-      <tr>
-        <td><%= link_to 'Show', list %></td>
-        <td><%= link_to 'Edit', edit_list_path(list) %></td>
-        <td><%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New List', new_list_path %>

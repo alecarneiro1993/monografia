@@ -1,42 +1,37 @@
 <div class="row">
-  <% if @user.role.name == "professor" %>
-    <% if @questions.count != 0 %>
-      <div id="index_table_container" class="panel panel-default col-md-8 col-md-offset-2">
-        <!-- Default panel contents -->
-        <div id="index_table_header" class="panel-heading">Your Questions</div>
-        <!-- Table -->
-        <table class="table">
-          <tr>
-            <th class="cell_width text_center">Title</th>
-            <th class="cell_width text_center">Description</th>
-            <th class="cell_width text_center">Actions</th>
-          </tr>
-          <% @questions.each do |question| %>
-          <tr>
-            <td class="no-border"><%= truncate(question.title, :length => 20, :separator => ' ')%></td>
-            <td><%= truncate(question.description, :length => 70, :separator => ' ')%></td>
-            <td class="text_center">
-              <%= link_to 'Show', question_path(question), :class => "td_show" %>
-              <%= link_to 'Edit', edit_question_path(question), :class => "td_edit" %>
-              <%= link_to 'Delete', question_path(question),
-                        method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
-            </td>
-          </tr>
-          <% end %>
-        </table>
-      </div>
-</div>
+  <!-- START QUESTION COUNT-->
+  <% if @questions.count != 0 %>
+    <div id="index_table_container" class="panel panel-default col-md-8 col-md-offset-2">
+      <div id="index_table_header" class="panel-heading">Your Questions</div>
+      <table class="table">
+        <tr>
+          <th class="cell_width text_center">Title</th>
+          <th class="cell_width text_center">Description</th>
+          <th class="cell_width text_center">Actions</th>
+        </tr>
+        <!-- START .EACH-->
+        <% @questions.each do |question| %>
+        <tr>
+          <td class="no-border"><%= truncate(question.title, :length => 20, :separator => ' ')%></td>
+          <td><%= truncate(question.description, :length => 70, :separator => ' ')%></td>
+          <td class="text_center">
+            <%= link_to 'Show', question_path(question), :class => "td_show" %>
+            <%= link_to 'Edit', edit_question_path(question), :class => "td_edit" %>
+            <%= link_to 'Delete', question_path(question),
+                      method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
+          </td>
+        </tr>
+        <% end %>
+        <!-- END .EACH-->
+      </table>
+    </div>
     <div class="row">
       <%= will_paginate @questions, :class => "col-md-2 col-md-offset-5" %>
     </div>
     <%= render "shared/createResource" %>
-    <% else %>
-</div>
-<%= render "shared/noQuestion" %>
-    <% end %>
   <% else %>
-    <div id="no_question">
-      <%= @noQuestions %>
-    </div>
+  <%= render "shared/noResource" %>
   <% end %>
+  <!-- END QUESTION COUNT -->
 </div>
+

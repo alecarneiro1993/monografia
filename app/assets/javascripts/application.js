@@ -16,3 +16,4 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_directory ./questions
+//= require_directory ./lists
