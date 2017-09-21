@@ -26,7 +26,7 @@
       </table>
     </div>
     <div class="row">
-      <%= will_paginate @questions, :class => "col-md-2 col-md-offset-5" %>
+      <%= will_paginate @questions, :class => "col-md-2 col-md-offset-5", :page_links => false %>
     </div>
     <%= render "shared/createResource" %>
   <% else %>
@@ -34,4 +34,3 @@
   <% end %>
   <!-- END QUESTION COUNT -->
 </div>
-

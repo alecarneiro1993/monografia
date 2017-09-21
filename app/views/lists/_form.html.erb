@@ -28,13 +28,13 @@
             <%= f.text_field :title, :class => "form-control"%>
           </div>
           <div class="form-group">
-            <%= select_tag "questions", options_from_collection_for_select(@questions, "id", "title"), multiple: true, :class => "list_container", :id => "questions_container" %>
+            <%= select_tag nil, options_from_collection_for_select(@questions, "id", "title"), multiple: true, :class => "list_container", :id => "questions_container" %>
             <div id="throw_container">
               <input type="button" id="throw_right" value=">" />
               <br>
               <input type="button" id="throw_left" value="<" />
             </div>
-            <%= select_tag "list_questions", nil,multiple: true, :class => "list_container", :id => "questions_list_container" %>
+            <%= select_tag nil, nil,multiple: true, :class => "list_container", :id => "questions_list_container" %>
           </div>
           <%= f.hidden_field :question_ids%>
           <div class="field">

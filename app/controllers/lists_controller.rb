@@ -1,4 +1,5 @@
 class ListsController < ApplicationController
+  require 'will_paginate/array'
   before_action :set_list, only: [:show, :edit, :update, :destroy]
   before_action :set_current_user
   before_action :check_professor, only: [:new, :edit, :update, :destroy]
@@ -19,6 +20,13 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
+    @questions = []
+    @ids = @list.question_ids
+    @ids.each do |i|
+      @q = Question.find(i)
+      @questions << @q
+    end
+    @questions = @questions.paginate(page: params[:page], per_page: 1)
   end
 
   # GET /lists/new
@@ -35,16 +43,13 @@ class ListsController < ApplicationController
   # POST /lists.json
   def create
     @list = List.new(list_params)
-
-    respond_to do |format|
+    @list.user_id = @user.id
+    @list.question_ids = params[:list][:question_ids].split(',').map { |s| s.to_i }
       if @list.save
-        format.html { redirect_to @list, notice: 'List was successfully created.' }
-        format.json { render :show, status: :created, location: @list }
+        redirect_to lists_path
       else
-        format.html { render :new }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+        redirect_to new_list_path
       end
-    end
   end
 
   # PATCH/PUT /lists/1
@@ -71,6 +76,10 @@ class ListsController < ApplicationController
     end
   end
 
+
+  def results
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
@@ -79,7 +88,7 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.fetch(:list, {})
+      params.require(:list).permit(:title, :question_ids, question_ids: [])
     end
 
     private
@@ -87,7 +96,7 @@ class ListsController < ApplicationController
     def set_current_user
       @user = current_user
     end
-    
+
     private
     def check_professor
       if @user.role.name != "professor"

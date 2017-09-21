@@ -39,7 +39,6 @@ class QuestionsController < ApplicationController
       redirect_to set_answer_question_path(@question)
     else
       redirect_to new_question_path
-      format.json { render json: @question.errors, status: :unprocessable_entity }
     end
   end
 
@@ -50,10 +49,10 @@ class QuestionsController < ApplicationController
         redirect_to set_answer_question_path(@question)
       end
   end
-  
+
   def set_answer
   end
-  
+
   def send_answer
     if @question.update_attribute(:answer, params[:question][:answer].split(',').map { |s| s.to_i })
       redirect_to questions_path, notice: 'Question was created and answer was set.'
@@ -61,11 +60,11 @@ class QuestionsController < ApplicationController
       redirect_to set_answer_question_path(@question)
     end
   end
-  
+
 
   # DELETE /questions/1
   # DELETE /questions/1.json
-  def destroy 
+  def destroy
     @question.destroy
     respond_to do |format|
       format.html { redirect_to questions_url, notice: 'Question was successfully destroyed.' }
