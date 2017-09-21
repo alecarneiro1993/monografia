@@ -15,5 +15,8 @@
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
+//= require Chart.bundle
+//= require chartkick
 //= require_directory ./questions
 //= require_directory ./lists
+

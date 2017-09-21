@@ -7,6 +7,7 @@ $(document).on('turbolinks:load', function() {
   function arraysEqual(arr1, arr2, errorArr) {
     if(arr1.length !== arr2.length) {
       errorArr.push("Number of instructions is incorrect.");
+      $(".correct_input").val(false);
       return errorArr;
     }
 
@@ -39,8 +40,8 @@ $(document).on('turbolinks:load', function() {
     console.log("question ids " + $("#list_question_ids").val());
   });
 
-    //COMPARE ANSWERS FUNCTON
-    if($(".question_list_answer").length > 0) {
+  //COMPARE ANSWERS FUNCTON
+  if($(".question_list_answer").length > 0) {
 
       //Shuffle list items in list_images list
       $(function () {
@@ -69,14 +70,16 @@ $(document).on('turbolinks:load', function() {
         //Compare Result and give feedback
         if(arraysEqual(answerArr, question_answer, errorMsgs).length == 0) {
           $("#errors").html('');
-          $("#feedback").html("You are correct! Congratulations!!");
+          $("#feedback").html("You are correct!");
           $("#feedback").addClass("feedback_right");
           $("#feedback").removeClass("feedback_wrong");
+          $(".correct_input").val(true);
         } else {
-          $("#feedback").html("You are wrong!<br> Go to the next queston!");
+          $("#feedback").html("You are wrong!");
           $("#feedback").addClass("feedback_wrong");
           $("#feedback").removeClass("feedback_right");
           $("#errors").html('');
+          $(".correct_input").val(false);
           for(var i = 0; i < errorMsgs.length; i++) {
             $("#errors").append("<li>" + errorMsgs[i] + "</li>");
           }

@@ -1,0 +1,6 @@
+
+
+<div class="row col-md-10 col-md-offset-1">
+  <h1 class='center'>Results for List: <%= @list.title %></h1>
+  <%= pie_chart Correct: @correct[true], Incorrect: @incorrect[false] %>
+</div>

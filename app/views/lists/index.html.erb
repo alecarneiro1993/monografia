@@ -14,9 +14,11 @@
           <td class="no-border"><%= truncate(list.title, :length => 20, :separator => ' ')%></td>
           <td class="center">
             <%= link_to 'Show', list_path(list), :class => "td_show" %>
-            <%= link_to 'Edit', edit_list_path(list), :class => "td_edit" %>
-            <%= link_to 'Delete', list_path(list),
-                      method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
+            <% if @user.role.name == 'professor' %>
+              <%= link_to 'Edit', edit_list_path(list), :class => "td_edit" %>
+              <%= link_to 'Delete', list_path(list),
+                        method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
+            <% end %>
           </td>
         </tr>
         <% end %>

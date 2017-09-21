@@ -1,6 +1,6 @@
 class ListsController < ApplicationController
   require 'will_paginate/array'
-  before_action :set_list, only: [:show, :edit, :update, :destroy]
+  before_action :set_list, only: [:show, :edit, :update, :destroy, :results]
   before_action :set_current_user
   before_action :check_professor, only: [:new, :edit, :update, :destroy]
   # GET /lists
@@ -21,6 +21,7 @@ class ListsController < ApplicationController
   # GET /lists/1.json
   def show
     @questions = []
+    @result = Result.new
     @ids = @list.question_ids
     @ids.each do |i|
       @q = Question.find(i)
@@ -28,6 +29,19 @@ class ListsController < ApplicationController
     end
     @questions = @questions.paginate(page: params[:page], per_page: 1)
   end
+  
+  
+  def send_results
+    @result = Result.create(result_params)
+    @result.save
+  end
+
+  def results
+    @correct = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => true).group(:correct).count
+    @incorrect = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => false).group(:correct).count
+  end
+  
+  
 
   # GET /lists/new
   def new
@@ -76,10 +90,6 @@ class ListsController < ApplicationController
     end
   end
 
-
-  def results
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
@@ -102,5 +112,9 @@ class ListsController < ApplicationController
       if @user.role.name != "professor"
         redirect_to root_path
       end
+    end
+    
+    def result_params
+      params.require(:result).permit(:user_id, :question_id, :list_id, :correct)
     end
 end

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get '/lists/:id/results' => 'lists#results', as: 'list_results'
+  post '/list/:id', :controller => 'lists', :action => 'send_results'
   resources :lists
 
   get '/questions/:id/set_answer' => 'questions#set_answer', as: 'set_answer_question'

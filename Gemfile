@@ -47,6 +47,8 @@ gem 'will_paginate'
 
 gem 'rmagick', :require => 'RMagick'
 
+gem 'chartkick'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
