@@ -7,19 +7,30 @@
         <tr>
           <th class="cell_width center">Title</th>
           <th class="cell_width center">Actions</th>
+          <th class="cell_width center">Status</th>
         </tr>
         <!-- START .EACH-->
         <% @lists.each do |list| %>
         <tr>
           <td class="no-border"><%= truncate(list.title, :length => 20, :separator => ' ')%></td>
           <td class="center">
-            <%= link_to 'Show', list_path(list), :class => "td_show" %>
+            <%= link_to 'Try', list_path(list), :class => "td_show" %>
             <% if @user.role.name == 'professor' %>
               <%= link_to 'Edit', edit_list_path(list), :class => "td_edit" %>
               <%= link_to 'Delete', list_path(list),
                         method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
             <% end %>
+            <% if all_questions_answered_status(current_user, list) %>
+            <%= link_to 'Results', list_results_path(list), :class => "td_results" %>
+            <% end %>
           </td>
+          <% if all_questions_answered_status(current_user, list) %>
+            <td class="status_complete">COMPLETED</td>
+          <% elsif Result.where(:user_id => current_user.id, :list_id => list.id).count == 0 %>
+            <td class="status_incomplete">NOT ATTEMPTED</td>
+          <% else %>
+            <td class="status_inprogress">IN PROGRESS</td>
+          <% end %>
         </tr>
         <% end %>
         <!-- END .EACH-->

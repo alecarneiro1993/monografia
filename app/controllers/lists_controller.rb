@@ -8,11 +8,15 @@ class ListsController < ApplicationController
   def index
     @resource = "List"
     @resource_new_path = new_list_path
-    @lists = List.all
     if @user.role.name == "professor"
       @lists = @user.lists.paginate(page: params[:page], per_page: 6)
       if @lists.count == 0
         @noResource = "Ahh boo ;(! <br /> You have no lists created.".html_safe
+      end
+    else
+      @lists = List.all.paginate(page: params[:page], per_page: 6)
+      if @lists.count == 0
+        @noResource = "Ahh boo ;(! <br /> You have no lists to try.".html_safe
       end
     end
   end
@@ -20,17 +24,17 @@ class ListsController < ApplicationController
   # GET /lists/1
   # GET /lists/1.json
   def show
-    @questions = []
-    @result = Result.new
-    @ids = @list.question_ids
-    @ids.each do |i|
-      @q = Question.find(i)
-      @questions << @q
-    end
-    @questions = @questions.paginate(page: params[:page], per_page: 1)
+      @questions = []
+      @result = Result.new
+      @ids = @list.question_ids
+      @ids.each do |i|
+        @q = Question.find(i)
+        @questions << @q
+      end
+      @questions = @questions.paginate(page: params[:page], per_page: 1)
   end
-  
-  
+
+
   def send_results
     @result = Result.create(result_params)
     @result.save
@@ -40,8 +44,8 @@ class ListsController < ApplicationController
     @correct = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => true).group(:correct).count
     @incorrect = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => false).group(:correct).count
   end
-  
-  
+
+
 
   # GET /lists/new
   def new
@@ -113,8 +117,23 @@ class ListsController < ApplicationController
         redirect_to root_path
       end
     end
-    
+
     def result_params
       params.require(:result).permit(:user_id, :question_id, :list_id, :correct)
+    end
+
+    def all_questions_answered_status(user, list)
+      @attempted = Result.where(:user_id => user.id, :list_id => list.id)
+      if @attempted.count == list.question_ids.count
+        return true
+      else
+        return false
+      end
+    end
+
+    helper_method :all_questions_answered_status
+
+    def build_questions_for_list
+      puts "heyyyyy"
     end
 end

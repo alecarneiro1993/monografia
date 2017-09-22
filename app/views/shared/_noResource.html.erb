@@ -1,4 +1,6 @@
 <div id="no_question">
   <%= @noResource %>
 </div>
+<% if current_user.role.name == 'professor' %>
 <%= render "shared/createResource" %>
+<% end %>
