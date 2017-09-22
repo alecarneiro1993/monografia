@@ -41,8 +41,17 @@ class ListsController < ApplicationController
   end
 
   def results
-    @correct = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => true).group(:correct).count
-    @incorrect = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => false).group(:correct).count
+    if all_questions_answered_status(@user, @list)
+      @correct = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => true).group(:correct).count
+      @incorrect = Result.where(:user_id => current_user.id, :list_id => @list.id, :correct => false).group(:correct).count
+      
+      build_questions_for_result
+      
+      @questions = @questions.paginate(page: params[:page], per_page: 5)
+      
+    else
+      redirect_to lists_path
+    end
   end
 
 
@@ -55,6 +64,10 @@ class ListsController < ApplicationController
 
   # GET /lists/1/edit
   def edit
+    if any_question_answered(@user, @list)
+      redirect_to lists_path
+    end
+    @questions = @user.questions
   end
 
   # POST /lists
@@ -63,12 +76,9 @@ class ListsController < ApplicationController
     @list = List.new(list_params)
     @list.user_id = @user.id
     @list.list_questions = params[:list][:list_questions].split(',').map { |s| s.to_i }
-    puts @list.errors.inspect
-    logger.debug "List attriutes hash: #{@list.attributes.inspect}"
       if @list.save!
         redirect_to lists_path
       else
-        puts "to caindo aqui"
         redirect_to new_list_path
       end
   end
@@ -76,15 +86,12 @@ class ListsController < ApplicationController
   # PATCH/PUT /lists/1
   # PATCH/PUT /lists/1.json
   def update
-    respond_to do |format|
+    params[:list][:list_questions] = params[:list][:list_questions].split(',').map { |s| s.to_i }
       if @list.update(list_params)
-        format.html { redirect_to @list, notice: 'List was successfully updated.' }
-        format.json { render :show, status: :ok, location: @list }
+        redirect_to lists_path
       else
-        format.html { render :edit }
-        format.json { render json: @list.errors, status: :unprocessable_entity }
+        redirect_to new_list_path
       end
-    end
   end
 
   # DELETE /lists/1
@@ -135,8 +142,32 @@ class ListsController < ApplicationController
     end
 
     helper_method :all_questions_answered_status
+    
+    
+    def any_question_answered(user, list)
+      @attempted = Result.where(:user_id => user.id, :list_id => list.id)
+      if @attempted.count > 0
+        return true
+      else
+        return false
+      end
+    end
+    
+    helper_method :any_question_answered
 
-    def build_questions_for_list
-      puts "heyyyyy"
+    def build_questions_for_result
+      @questions = []
+      @results = Result.where(:user_id => @user.id, :list_id => @list.id)
+      @corrects = 0
+      @total = @results.count
+      @results.each do |r|
+        @q = Question.find(r.question_id)
+        @qr = r.correct
+        if @qr
+          @corrects += 1
+        end
+        @questions << [@q, @qr]
+      end
+      @percent = ((@corrects.to_f / @total.to_f) * 100).round
     end
 end
