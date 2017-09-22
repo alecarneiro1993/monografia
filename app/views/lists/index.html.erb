@@ -17,8 +17,6 @@
             <%= link_to 'Try', list_path(list), :class => "td_show" %>
             <% if @user.role.name == 'professor' %>
               <%= link_to 'Edit', edit_list_path(list), :class => "td_edit" %>
-              <%= link_to 'Delete', list_path(list),
-                        method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
             <% end %>
             <% if all_questions_answered_status(current_user, list) %>
             <%= link_to 'Results', list_results_path(list), :class => "td_results" %>

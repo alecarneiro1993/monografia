@@ -17,8 +17,6 @@
           <td class="text_center">
             <%= link_to 'Show', question_path(question), :class => "td_show" %>
             <%= link_to 'Edit', edit_question_path(question), :class => "td_edit" %>
-            <%= link_to 'Delete', question_path(question),
-                      method: :delete, data: { confirm: 'Are you sure?' }, :class => "td_delete" %>
           </td>
         </tr>
         <% end %>

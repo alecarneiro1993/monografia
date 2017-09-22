@@ -3,6 +3,7 @@ class User < ApplicationRecord
   belongs_to :role
   has_many :questions, :dependent => :delete_all
   has_many :lists, :dependent => :delete_all
+  has_many :results, :dependent => :delete_all
 
   before_create :set_default_role
   # Include default devise modules. Others available are:

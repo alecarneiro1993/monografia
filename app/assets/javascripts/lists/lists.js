@@ -36,7 +36,7 @@ $(document).on('turbolinks:load', function() {
     }).get();
     idsArray = idsArray.map(Number);
     console.log(idsArray);
-    $("#list_question_ids").val(idsArray);
+    $("#list_list_questions").val(idsArray);
     console.log("question ids " + $("#list_question_ids").val());
   });
 

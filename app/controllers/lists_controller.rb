@@ -26,7 +26,7 @@ class ListsController < ApplicationController
   def show
       @questions = []
       @result = Result.new
-      @ids = @list.question_ids
+      @ids = @list.list_questions
       @ids.each do |i|
         @q = Question.find(i)
         @questions << @q
@@ -62,10 +62,13 @@ class ListsController < ApplicationController
   def create
     @list = List.new(list_params)
     @list.user_id = @user.id
-    @list.question_ids = params[:list][:question_ids].split(',').map { |s| s.to_i }
-      if @list.save
+    @list.list_questions = params[:list][:list_questions].split(',').map { |s| s.to_i }
+    puts @list.errors.inspect
+    logger.debug "List attriutes hash: #{@list.attributes.inspect}"
+      if @list.save!
         redirect_to lists_path
       else
+        puts "to caindo aqui"
         redirect_to new_list_path
       end
   end
@@ -102,7 +105,7 @@ class ListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def list_params
-      params.require(:list).permit(:title, :question_ids, question_ids: [])
+      params.require(:list).permit(:title, :list_questions, list_questions: [])
     end
 
     private
@@ -124,7 +127,7 @@ class ListsController < ApplicationController
 
     def all_questions_answered_status(user, list)
       @attempted = Result.where(:user_id => user.id, :list_id => list.id)
-      if @attempted.count == list.question_ids.count
+      if @attempted.count == list.list_questions.count
         return true
       else
         return false
