@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   private
 
   def layout_by_resource
-    if devise_controller?
+    if devise_controller? && resource_name == :user && action_name != 'edit'
       "devise"
     else
       "application"
@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
   end
+  
+  private
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :role_id])

@@ -1,0 +1,51 @@
+
+<% if @questions.count >= 2 %>
+  <div id="form_container" class="panel panel-default col-md-4 col-md-offset-4">
+    <div id="form_title_container" class="panel-heading">
+      <h3 class="panel-title form_title">
+        <% if current_page?(new_list_path) %>
+          Create
+        <% else %>
+          Edit
+        <% end %>
+        List
+      </h3>
+    </div>
+    <div class="panel-body">
+        <%= form_for(@list) do |f| %>
+          <% if @list.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@list.errors.count, "error") %> prohibited this post from being saved:</h2>
+              <ul>
+              <% @list.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <div class="form-group">
+            <%= f.label :title %><br />
+            <%= f.text_field :title, :class => "form-control"%>
+          </div>
+          <div class="form-group">
+            <%= select_tag nil, options_from_collection_for_select(@questions, "id", "title"), multiple: true, :class => "list_container", :id => "questions_container" %>
+            <div id="throw_container">
+              <input type="button" id="throw_right" value=">" />
+              <br>
+              <input type="button" id="throw_left" value="<" />
+            </div>
+            <%= select_tag nil, nil,multiple: true, :class => "list_container", :id => "questions_list_container" %>
+          </div>
+          <%= f.hidden_field :list_questions %>
+          <div class="field">
+            <%= f.submit "Submit", :class => "create_resource_new" %>
+          </div>
+        <% end %>
+        <div class="field">
+          <%= link_to 'Cancel', lists_path, :class => "back_link cancel_resource_new" %>
+        </div>
+    </div>
+  </div>
+<% else %>
+<h2 class="center">Create at least 2 questions to create a list!</h2>
+<% end %>

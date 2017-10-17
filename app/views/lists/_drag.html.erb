@@ -1,0 +1,61 @@
+<div class="row col-md-10 col-md-offset-1">
+   <h1 class='center'>Solve List</h1>
+   <% @questions.each do |q| %>
+   <div class="question_field">
+      <script>
+         var question_answer = <%= q.answer %>;
+         console.log(question_answer);
+      </script>
+      <h2><b>Title: </b><span><%= q.title %></span></h2>
+      <br>
+      <h4><b>Description:</b></h4>
+      <p><%= q.description%></p>
+      <ol id="list_images" class="list_style custom_counter connectedSortable">
+         <% q.images.each_with_index do |i, id| %>
+         <li id="<%= id %>">
+            <img src="<%= i.url %>">
+         </li>
+         <% end %>
+      </ol>
+      <ol id="list_answer" class="list_style connectedSortable custom_counter">
+      </ol>
+   </div>
+   <% @attempted = Result.where(:user_id => @user.id, :list_id => @list.id, :question_id => q.id) %>
+   <%  if @attempted.count == 0 %>
+   <div class="row col-md-2 col-md-offset-5 center row-mt">
+      <%= form_for @result, :url => {:controller => 'lists', :action => "send_results"}, :method => 'post' do |f| %>
+      <%= f.hidden_field :user_id, :value => @user.id %>
+      <%= f.hidden_field :list_id, :value => @list.id %>
+      <%= f.hidden_field :correct, :class => 'correct_input' %>
+      <%= f.hidden_field :question_id, :value => q.id %>
+      <%= f.submit "Send Answer", :class => "question_list_answer" %>
+      <% end %>
+   </div>
+   <% else %>
+   <h2 class="center">Already answered this question.<br />Go to the next one!</h2>
+   <div class="hide_prev">
+      <% if @questions.total_pages != @questions.current_page %>
+      <%= will_paginate @questions, :class => "col-md-4 col-md-offset-4 center", :page_links => false %>
+      <% else %>
+      <div class="row col-md-2 col-md-offset-5 center row-mt">
+         <%= link_to 'See Results', list_results_path(@list), :class => "finish_list_btn" %>
+      </div>
+      <% end %>
+   </div>
+   <% end %>
+   <% end %>
+   <div class="row col-md-8 col-md-offset-2 center row-mt">
+      <h1 id="feedback" class="center"></h1>
+      <ul id="errors">
+      </ul>
+   </div>
+   <div class="hide_prev">
+      <% if @questions.total_pages != @questions.current_page %>
+      <%= will_paginate @questions, :class => "col-md-4 col-md-offset-4 center hidden_paginate", :page_links => false %>
+      <% else %>
+      <div class="row col-md-2 col-md-offset-5 center row-mt">
+         <%= link_to 'See Results', list_results_path(@list), :class => "finish_list_btn disable_a_href" %>
+      </div>
+      <% end %>
+   </div>
+</div>

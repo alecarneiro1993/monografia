@@ -1,0 +1,112 @@
+@import "all/styles.sass"
+@import "all/variables.sass"
+
+//INDEX CSS START
+#no_question
+  text-align: center
+  font-size: 3em
+  color: #000
+  font-weight: bold
+  margin-bottom: 40px
+
+#index_table_container
+  padding: 0
+  margin-bottom: 40px
+
+  #index_table_header
+    font-size: 2em
+    text-align: center
+    font-weight: bold
+    background-color: $index-table-header-color
+    color: #fff
+
+  .table
+
+
+    td
+      width: 33%
+      height: 50px
+      text-align: center
+      border-left: 1px solid $border-td-color
+      border-right: 1px solid $border-td-color
+      vertical-align: middle
+
+      a
+        color: #fff
+        border-radius: 4px
+        padding: 5px
+        font-weight: bold
+        display: inline-block
+        text-decoration: none
+
+      .td_show
+        background-color: $td-show-option
+      .td_edit
+        background-color: $td-edit-option
+      .td_delete
+        background-color: $td-delete-option
+      .td_results
+        background-color: $td-results-option
+
+      &:hover
+        text-decoration: none
+
+    td.no-border
+      border-left: 0
+
+.create_resource
+  background-color: $create-resource-color
+  padding: 15px
+  color: #fff
+  font-weight: bold
+  border-radius: 4px
+
+  &:hover
+    text-decoration: none
+    color: #fff
+
+//INDEX CSS END
+
+//NEW AND EDIT CSS START
+
+#form_container
+  padding: 0
+  #form_title_container
+    background-color: $form-title-color
+    .form_title
+      color: #fff
+      font-weight: bold
+      font-size: 2em
+      text-align: center
+
+.create_resource_new
+  background-color: $create-resource-color
+  padding: 10px
+  width: 100%
+  color: #fff
+  font-weight: bold
+  border-radius: 4px
+  border: 0
+
+.cancel_resource_new
+  background-color: $cancel-resource-color
+  padding: 10px
+  width: 100%
+  color: #fff
+  font-weight: bold
+  border-radius: 4px
+  border: 0
+  margin-top: 5px
+
+.back_link
+  display: block
+  text-align: center
+
+  &:hover
+    text-decoration: none
+    color: #fff
+
+.resize_disable
+  resize: none
+
+//NEW AND EDIT CSS END

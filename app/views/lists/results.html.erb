@@ -1,0 +1,28 @@
+<h2 class="center">Total Percent Score: <%= @percent %>%</h2>
+<div class="row col-md-10 col-md-offset-1">
+    <div id="index_table_container" class="panel panel-default col-md-8 col-md-offset-2">
+        <div id="index_table_header" class="panel-heading">Results for List:
+            <%= @list.title %>
+        </div>
+        <table class="table">
+            <tr>
+                <th class="cell_width center">Question Title</td>
+                <th class="cell_width center">Status</td>
+            </tr>
+            <% @questions.each do |a| %>
+                <tr>
+                    <td class="center">
+                        <%=a [0].title %>
+                    </td>
+                    <% if a[1]== true %>
+                        <td class="center status_complete">&#10004</td>
+                    <% else %>
+                        <td class="center status_incomplete">X</td>
+                    <% end %>
+                </tr>
+            <% end %>
+        </table>
+    </div>
+    <%= will_paginate @questions, :class => "col-md-2 col-md-offset-5 results_paginate", :page_links => false %>
+</div>
+<%= pie_chart Correct: @correct[true], Incorrect: @incorrect[false] %>

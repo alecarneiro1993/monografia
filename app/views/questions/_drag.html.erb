@@ -1,0 +1,43 @@
+<div class="row col-md-10 col-md-offset-1">
+    <% if current_page?(set_answer_question_path) %>
+      <h1 class='center'>Set Answer</h1>
+      <% else %>
+        <script>
+          var question_answer = <%= @question.answer %>;
+          console.log(question_answer);
+        </script>
+        <h1 class='center'>Try Question</h1><br>
+        <h2><b>Title: </b><span><%= @question.title %></span></h2><br>
+        <h4><b>Description:</b></h4>
+        <p><%= @question.description%></p>
+      <% end %>
+  <ol id="list_images" class="list_style custom_counter connectedSortable">
+    <% @question.images.each_with_index do |i, id| %>
+    <li id="<%= id %>">
+      <img src="<%= i.url %>">
+    </li>
+    <% end %>
+  </ol>
+  <ol id="list_answer" class="list_style connectedSortable custom_counter">
+  </ol>
+</div>
+  <% if current_page?(set_answer_question_path) %>
+    <div class="row col-md-2 col-md-offset-5 center row-mt">
+      <a class="answer_btn">Set Answer</a>
+    </div>
+      <div class="row col-md-2 col-md-offset-5 center row-mt">
+        <%= form_for @question, :url => {:action => "send_answer"} do |f| %>
+        <%= f.hidden_field :answer, :class => "answer_input" %>
+        <%= f.submit "Update Question", :class => "create_resource_new" %>
+        <% end %>
+      </div>
+  <% else %>
+    <div class="row col-md-2 col-md-offset-5 center row-mt">
+      <a class="answer_question_btn">Send Answer</a>
+    </div>
+    <div class="row col-md-8 col-md-offset-2 center row-mt">
+      <h1 id="feedback" class="center"></h1>
+      <ul id="errors">
+      </ul>
+    </div>
+  <% end %>

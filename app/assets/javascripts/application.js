@@ -11,7 +11,12 @@
 // about supported directives.
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
-//= require_tree .
+//= require Chart.bundle
+//= require chartkick
+//= require_directory ./questions
+//= require_directory ./lists
+

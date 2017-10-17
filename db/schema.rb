@@ -10,27 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170904043531) do
+ActiveRecord::Schema.define(version: 20170922042400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "lists", force: :cascade do |t|
     t.string "title"
-    t.integer "question_ids", default: [], array: true
+    t.integer "list_questions", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.json "images"
-    t.json "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "users_id"
-    t.index ["users_id"], name: "index_questions_on_users_id"
+    t.bigint "user_id"
+    t.integer "answer", default: [], array: true
+    t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "list_id"
+    t.bigint "question_id"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["list_id"], name: "index_results_on_list_id"
+    t.index ["question_id"], name: "index_results_on_question_id"
+    t.index ["user_id"], name: "index_results_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -60,6 +74,9 @@ ActiveRecord::Schema.define(version: 20170904043531) do
     t.index ["role_id"], name: "index_users_on_role_id"
   end
 
-  add_foreign_key "questions", "users", column: "users_id"
+  add_foreign_key "questions", "users"
+  add_foreign_key "results", "lists"
+  add_foreign_key "results", "questions"
+  add_foreign_key "results", "users"
   add_foreign_key "users", "roles"
 end

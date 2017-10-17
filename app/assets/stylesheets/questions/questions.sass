@@ -1,0 +1,80 @@
+@import "all/styles.sass"
+@import "all/variables.sass"
+
+.row-mt
+  margin-top: 20px
+  
+.custom_counter 
+  margin-left: 0
+  padding: 0
+  list-style-type: none
+
+.custom_counter li 
+  counter-increment: li-counter
+  
+.custom_counter li::before 
+    content: counter(li-counter)
+    font-weight: bold
+    background-color: $li-counter-color
+    border-radius: 2px
+    margin-right: 10px
+    padding: 3px
+    color: #fff
+
+.list_style
+  margin-top: 20px
+  background-color: transparent
+  width: 45%
+  min-height: 300px
+  border-radius: 4px
+  border: 4px solid $list-bg-color
+  display: inline-block
+  
+  li
+    width: 100%
+    min-height: 40px
+    margin-top: 10px
+    padding: 2px
+    margin-bottom: 10px
+    border: 2px solid $li-border-color
+    img
+      width: 90%
+      height: 100%
+
+#list_images
+  float: left
+
+#list_answer
+  border-color: $list-answer-bg-color
+  float: right
+  
+.answer_btn, .answer_question_btn
+  background-color: $submit-btn-color
+  font-weight: bold
+  border-radius: 4px
+  text-decoration: none
+  padding: 10px
+  color: #fff
+  
+  &:hover
+    text-decoration: none
+    color: #fff
+    cursor: pointer
+
+#feedback
+  color: #fff
+  padding: 5px
+  border-radius: 4px
+  
+.feedback_wrong
+  background-color: $feedback-wrong-color
+    
+.feedback_right
+  background-color: $feedback-right-color
+
+#errors
+  background-color: $errors-hint-color
+  font-weight: bold
+  font-size: 1.3em
+  color: #fff
+  text-align: left

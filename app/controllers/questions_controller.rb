@@ -1,10 +1,19 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy, :set_answer, :send_answer]
   before_action :set_current_user
+  before_action :check_professor
+
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @resource = "Question"
+    @resource_new_path = new_question_path
+    if @user.role.name == "professor"
+      @questions = @user.questions.paginate(page: params[:page], per_page: 6)
+      if @questions.count == 0
+        @noResource = "Ahh boo ;(! <br /> You have no questions created.".html_safe
+      end
+    end
   end
 
   # GET /questions/1
@@ -25,31 +34,33 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: 'Question was successfully created.' }
-        format.json { render :show, status: :created, location: @question }
-      else
-        format.html { render :new }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    @question.user_id = @user.id
+    if @question.save
+      redirect_to set_answer_question_path(@question)
+    else
+      redirect_to new_question_path
     end
   end
 
   # PATCH/PUT /questions/1
   # PATCH/PUT /questions/1.json
   def update
-    respond_to do |format|
       if @question.update(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question }
-      else
-        format.html { render :edit }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+        redirect_to set_answer_question_path(@question)
       end
+  end
+
+  def set_answer
+  end
+
+  def send_answer
+    if @question.update_attribute(:answer, params[:question][:answer].split(',').map { |s| s.to_i })
+      redirect_to questions_path, notice: 'Question was created and answer was set.'
+    else
+      redirect_to set_answer_question_path(@question)
     end
   end
+
 
   # DELETE /questions/1
   # DELETE /questions/1.json
@@ -69,13 +80,19 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.fetch(:question, {})
+      params.require(:question).permit(:title, :description, :images, {images: []}, :answer, answer: [])
     end
-    
-    
+
+
   private
   #Set Current user on platform
   def set_current_user
     @user = current_user
+  end
+
+  def check_professor
+    if @user.role.name != "professor"
+      redirect_to root_path
+    end
   end
 end

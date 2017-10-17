@@ -1,0 +1,68 @@
+@import "all/styles.sass"
+@import "all/variables.sass"
+
+.row-mt
+  margin-top: 20px
+
+#errors
+  background-color: $errors-hint-color
+  font-weight: bold
+  font-size: 1.3em
+  color: #fff
+  text-align: left
+
+.list_container
+  width: 40%
+  min-height: 100px
+  margin: 0
+  margin-bottom: 10px
+  float: left
+
+#questions_list_container
+  margin-left: 7px
+
+
+#throw_container
+    width: 10%
+    float: left
+    margin: 20px 0 0 10px
+
+button
+  font-weight: bold
+  #throw_left
+    margin-top: 5px
+
+.question_field
+  margin-top: 10px
+
+.question_list_answer, .finish_list_btn
+  background-color: $submit-btn-color
+  font-weight: bold
+  border-radius: 4px
+  text-decoration: none
+  padding: 10px
+  color: #fff
+
+.hide_prev
+  span.previous_page, a.previous_page
+    display: none
+  .hidden_paginate
+    display: none
+
+.disable_a_href
+  display: none
+
+.status_complete, .status_incomplete, .status_inprogress
+  font-weight: bold
+
+.status_complete
+  color: $status_complete
+
+.status_incomplete
+  color: $status_incomplete
+
+.status_inprogress
+  color: $status_inprogress
+
+.results_paginate
+  margin-bottom: 30px
