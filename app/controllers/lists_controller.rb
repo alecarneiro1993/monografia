@@ -76,7 +76,7 @@ class ListsController < ApplicationController
     @list = List.new(list_params)
     @list.user_id = @user.id
     @list.list_questions = params[:list][:list_questions].split(',').map { |s| s.to_i }
-      if @list.save!
+      if @list.save
         redirect_to lists_path
       else
         redirect_to new_list_path
